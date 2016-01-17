@@ -6,14 +6,15 @@ using namespace std;
 
 Deck::Deck(){
   Top = NULL;
-  numOfDecks = 8;
+  numOfDecks = 8;//INITIATE NUMBER OF DECKS
 }
 
 Deck::~Deck(){
-  while(!isEmpty())
+  while(!isEmpty())//DELETE ALL CARDS
     RemoveTop();
 }
 
+//DISPLAY ALL CARDS
 void Deck::displayAll(){
   Card* curr = Top;
 
@@ -26,21 +27,21 @@ void Deck::displayAll(){
 
   cout<<"]"<<endl;
 }
-
+//POP THE TOP OF THE DECK
 int Deck::RemoveTop(){
   Card* curr = Top;
   int card = 0;
 
-  if(isEmpty()){
+  if(isEmpty()){//IF DECK IS EMPTY
     cout<<"Deck is Empty"<<endl;
     return -1;
   }
-  else if(curr -> next == NULL){
+  else if(curr -> next == NULL){//IF ONE CARD IN DECK
     card = curr -> value;
     Top = NULL;
     delete curr;
   }
-  else{
+  else{//MORE THAN ONE CARD IN DECK
     card = curr -> value;
     Top = curr -> next;
     delete curr;
@@ -49,7 +50,7 @@ int Deck::RemoveTop(){
   return card;
 }
 
-void Deck::push(int Cardvalue){
+void Deck::push(int Cardvalue){//ADD CARD TO THE DECK
   Card* curr = Top, *newCard = NULL;
   newCard = new Card();
   newCard -> value = Cardvalue;
@@ -67,14 +68,14 @@ void Deck::push(int Cardvalue){
 
 }
 
-bool Deck::isEmpty(){
+bool Deck::isEmpty(){//IS DECK IS EMPTY
   if(Top == NULL)
     return true;
   else
     return false;
 }
 
-bool Deck::isFull(){
+bool Deck::isFull(){//IF DECK IS FULL
   if(cardsLeft() == 52*numOfDecks)
     return true;
   else
@@ -93,7 +94,7 @@ int Deck::cardsLeft(){
   return count;
 }
 
-int Deck::getCard(int position){
+int Deck::getCard(int position){//POP CARD
   Card* curr = Top;
   int Cardvalue = 0;
 
@@ -115,7 +116,7 @@ int Deck::getCard(int position){
   return Cardvalue;
 }
 
-void Deck::shuffle(){
+void Deck::shuffle(){//SHUFFLE THE DECK 
   int card = 0;
   int unusedCards = 52*numOfDecks;
   vector<int> d;
