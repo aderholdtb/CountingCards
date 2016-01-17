@@ -4,11 +4,11 @@
 
 class Hand{
  public:
-  Card* firstCard;
+  Card* firstCard;//FIRST CARD IN HAND
   int playerNumber;
   int totalCards;
-  bool doubleD;
-  double handCost;
+  bool doubleD;//IF DOUBLE DOWN HAND
+  double handCost;//AMOUNT BET
 
   Hand();
   Hand(int player);
@@ -17,11 +17,11 @@ class Hand{
   void takeCard(int Cardvalue);
   void deleteCards();
   int handTotal();
-  int getCardValue(int card);
+  int getCardValue(int card);//1-11
   void displayCards(int hand);
   int deleteFirstCard();
   int handPlay();
-  void doubleDown(){handCost*=2;doubleD=true;}
+  void doubleDown(){handCost*=2;doubleD=true;}//UPDATE BET
   void bet(double betAmount);
 };
 
