@@ -7,14 +7,14 @@
 #include"dealer.h"
 using namespace std;
 
-void exportWinningHands(vector<int> winHands);
-void exportCount(vector<int> count);
-void exportAvgWin(vector<double> avgWin);
+void exportWinningHands(vector<int> winHands);//UPDATE AMOUNT OF WINNING HANDS FOR THIS ROUND
+void exportCount(vector<int> count);//UPDATE COUNT FOR EACH ROUND OF CARDS
+void exportAvgWin(vector<double> avgWin);//AVERAGE WINNINGS FOR HAND
 
 int main(){
   srand(time(NULL));
 
-  Dealer d(4);
+  Dealer d(4);//AMOUNT OF PLAYERS AT TABLE
   vector<double> avgWin;
   vector<int> winHands;
   vector<int> count;
@@ -37,7 +37,7 @@ int main(){
   return 0;
 }
 
-void exportWinningHands(vector<int> winHands){
+void exportWinningHands(vector<int> winHands){//AMOUNT OF WINNING HANDS FOR ROUND
   ofstream outFile;
   outFile.open("winHands.txt");
 
@@ -47,7 +47,8 @@ void exportWinningHands(vector<int> winHands){
 
   outFile.close();
 }
-void exportCount(vector<int> count){
+
+void exportCount(vector<int> count){//COUNT AFTER EACH ROUND
   ofstream outFile;
   outFile.open("count.txt");
 
@@ -57,7 +58,8 @@ void exportCount(vector<int> count){
 
   outFile.close();
 }
-void exportAvgWin(vector<double> avgWin){
+
+void exportAvgWin(vector<double> avgWin){//AVERAGE WINNINGS FOR ROUND
   ofstream outFile;
   outFile.open("avgWin.txt");
 
