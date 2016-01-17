@@ -7,8 +7,8 @@ using namespace std;
 
 Player::Player(){
   playerNumber = 0;
-  handCount = 1;
-  chips = 10000;
+  handCount = 1;//AMOUNT OF HANDS
+  chips = 10000;//STARTING CHIPS
 }
 
 Player::~Player(){
@@ -17,22 +17,22 @@ Player::~Player(){
   }
 }
 
-bool Player::playType(int play, int& hand, bool& takeCard){
+bool Player::playType(int play, int& hand, bool& takeCard){//TYPE OF PLAY FOR HAND
   bool doubleD = true;
 
-  if(play == 0)
+  if(play == 0)//IF STAND
     return false;
-  else if(play == 1){
+  else if(play == 1){//IF HIT
     takeCard = true;
     return true;
   }
-  else if(play == 3){
+  else if(play == 3){//IF SPLIT
       split(hand);
       handCount++;
       takeCard = true;
       return false;
   }
-  else if(play == 4){
+  else if(play == 4){//IF DOUBLE DOWN - STAND
     if(doubleD){
       hands[hand].doubleDown();
       takeCard = true;
@@ -43,7 +43,7 @@ bool Player::playType(int play, int& hand, bool& takeCard){
       return false;
     }
   }
-  else if(play == 5){
+  else if(play == 5){//IF DOUBLE DOWN - HIT
     if(doubleD){
       hands[hand].doubleDown();
       takeCard = true;
@@ -56,6 +56,6 @@ bool Player::playType(int play, int& hand, bool& takeCard){
   }
 }
 
-void Player::split(int hand){
+void Player::split(int hand){//ADD NEW HAND AND SPLIT CARDS
   hands[hand + 1].takeCard(hands[hand].deleteFirstCard());
 }
