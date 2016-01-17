@@ -1,7 +1,7 @@
 #ifndef CARDS_H
 #define CARDS_H
 
-struct Card{
+struct Card{//NODE CARD
   int value;
   Card* next;
   Card* prev;
@@ -9,17 +9,17 @@ struct Card{
 
 class Deck{
  public:
-  Card* Top;
+  Card* Top;//TOP OF THE DECK------>COULD HAVE MADE PRIVATE VARIABLE
   int numOfDecks;
   int cardsLeftinDeck;
 
   Deck();
   ~Deck();
-  int RemoveTop();
-  void push(int Cardvalue);
+  int RemoveTop();//POP TOP OF THE DECK
+  void push(int Cardvalue);//ADD CARD TO THE DECK
   bool isEmpty();
   int cardsLeft();
-  void shuffle();
+  void shuffle();//SHUFFLE THE CARDS IN THE DECK
   bool isFull();
   int getCard(int Cardvalue);
   void displayAll();
