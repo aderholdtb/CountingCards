@@ -18,11 +18,11 @@ Hand::~Hand(){
   deleteCards();
 }
 
-void Hand::bet(double betAmount){
+void Hand::bet(double betAmount){//BET AMOUNT
   handCost = betAmount;
 }
 
-void Hand::takeCard(int Cardvalue){
+void Hand::takeCard(int Cardvalue){//ADD CARD TO HAND
   Card* curr = firstCard, *newCard = NULL;
   newCard = new Card();
   newCard -> value = Cardvalue;
@@ -43,7 +43,7 @@ void Hand::takeCard(int Cardvalue){
   totalCards++;
 }
 
-void Hand::deleteCards(){
+void Hand::deleteCards(){//DELETE HAND
   Card* curr = firstCard;
 
   if(curr == NULL){
@@ -59,7 +59,7 @@ void Hand::deleteCards(){
   }
 }
 
-int Hand::handTotal(){
+int Hand::handTotal(){//GET HAND TOTAL
   Card* curr = firstCard;
   int count = 0;
   int aceCount = 0;
@@ -68,7 +68,7 @@ int Hand::handTotal(){
   while(curr != NULL){
     cardvalue = getCardValue(curr -> value);
 
-    if(cardvalue == 11)
+    if(cardvalue == 11)//UPDATE ACE COUNT
       aceCount++;
 
     count += cardvalue;
@@ -85,7 +85,7 @@ int Hand::handTotal(){
   return count;
 }
 
-int Hand::getCardValue(int card){
+int Hand::getCardValue(int card){//RETURN CARD VALUE 1-11
   card %= 13;
 
   if(card == 11 || card == 12 || card == 10)
@@ -96,7 +96,7 @@ int Hand::getCardValue(int card){
   return card + 1;
 }
 
-void Hand::displayCards(int hand){
+void Hand::displayCards(int hand){//DISPLAY CARDS, SUIT AND CARD
   Card* curr = firstCard;
   int cardValue = 0;
 
@@ -155,10 +155,10 @@ int Hand::handPlay(){
     int card1 = (firstCard -> value)%13;
     int card2 = (firstCard -> next -> value)%13;
 
-    if(card1 == card2){
+    if(card1 == card2){//IF PAIR
       return 2;
     }
-    else if(card1 == 0 || card2 == 0)
+    else if(card1 == 0 || card2 == 0)//IF ACE IN HAND
       return 1;
     else{
       return 0;
