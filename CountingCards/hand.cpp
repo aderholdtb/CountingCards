@@ -6,7 +6,6 @@ Hand::Hand(){
   firstCard = NULL;
   playerNumber = 0;
   totalCards = 0;
-  handCost = 0;
 }
 
 Hand::Hand(int player){
@@ -18,20 +17,28 @@ Hand::~Hand(){
   deleteCards();
 }
 
-void Hand::bet(double betAmount){
-  handCost = betAmount;
+void Hand::doubleDown(){
+  for(int i = 0; i < 4; i++){//DOUBLE DOWN FOR EVERY COUNT TYPE
+    handCost[i]*=2;
+  }
+
+  doubleD=true;
 }
 
-void Hand::takeCard(int Cardvalue){
+void Hand::bet(double betAmount, int type){//BET FOR TYPE OF COUNT
+  handCost[type] = betAmount;
+}
+
+void Hand::takeCard(int Cardvalue){//GRAB NEW CARD
   Card* curr = firstCard, *newCard = NULL;
-  newCard = new Card();
+  newCard = new Card();//CREATE NEW CARD
   newCard -> value = Cardvalue;
   newCard -> next = NULL;
 
-  if(curr == NULL){
+  if(curr == NULL){//IF NO CARDS IN HAND
     firstCard = newCard;
   }
-  else{
+  else{//IF CARDS IN HAND ALREADY
     while(curr -> next != NULL){
       curr = curr -> next;
     }
@@ -43,14 +50,14 @@ void Hand::takeCard(int Cardvalue){
   totalCards++;
 }
 
-void Hand::deleteCards(){
+void Hand::deleteCards(){//DELETE CARDS IN HAND
   Card* curr = firstCard;
 
-  if(curr == NULL){
+  if(curr == NULL){//IF NO CARDS IN HAND
     return;
   }
   else{
-    while(curr != NULL){
+    while(curr != NULL){//WHILE CARDS IN HAND
       firstCard = curr -> next;
       delete curr;
       curr = firstCard;
@@ -59,13 +66,13 @@ void Hand::deleteCards(){
   }
 }
 
-int Hand::handTotal(){
+int Hand::handTotal(){//GET HAND TOTAL
   Card* curr = firstCard;
   int count = 0;
   int aceCount = 0;
   int cardvalue = 0;
 
-  while(curr != NULL){
+  while(curr != NULL){//WHILE THERE ARE CARDS LEFT IN HAND
     cardvalue = getCardValue(curr -> value);
 
     if(cardvalue == 11)
@@ -75,7 +82,7 @@ int Hand::handTotal(){
     curr = curr -> next;
   }
 
-  for(int i = 0; i < aceCount; i++){
+  for(int i = 0; i < aceCount; i++){//CHECK FOR ACES
     if(count > 21)
       count -= 10;
     else
@@ -85,7 +92,7 @@ int Hand::handTotal(){
   return count;
 }
 
-int Hand::getCardValue(int card){
+int Hand::getCardValue(int card){//GET CARD VALUE
   card %= 13;
 
   if(card == 11 || card == 12 || card == 10)
@@ -96,48 +103,48 @@ int Hand::getCardValue(int card){
   return card + 1;
 }
 
-void Hand::displayCards(int hand){
+void Hand::displayCards(int hand){//DISPLAY ALL CARDS
   Card* curr = firstCard;
   int cardValue = 0;
 
   cout<<"Hand "<<hand + 1<<": ";
 
-  while(curr != NULL){
+  while(curr != NULL){//FOR EVERY CARD IN HAND
     cardValue = curr -> value%52;
     cout<<getCardValue(cardValue);
 
-    if(cardValue <=13){
+    if(cardValue <=13){//IF HEART
       cout<<"H ";
     }
-    else if(cardValue <= 26){
+    else if(cardValue <= 26){//IF DIAMOND
       cout<<"D ";
     }
-    else if(cardValue <= 39){
+    else if(cardValue <= 39){//IF SPADE
       cout<<"S ";
     }
-    else{
+    else{//IF CLUB
       cout<<"C ";
     }
 
     curr = curr -> next;
   }
 
-  cout<<" - Total: "<<handTotal()<<endl;
+  cout<<" - Total: "<<handTotal()<<endl;//HAND TOTAL
 }
 
-int Hand::deleteFirstCard(){
+int Hand::deleteFirstCard(){//DELETE FIRST CARD
   Card* curr = firstCard;
   int card = 0;
 
-  if(curr == NULL){
+  if(curr == NULL){//IF NO CARDS IN HAND
     return -1;
   }
-  else if(curr -> next == NULL){
+  else if(curr -> next == NULL){//IF ONE CARD IN HAND
     card = curr -> value;
     delete curr;
     firstCard = NULL;
   }
-  else{
+  else{//MORE THAN ONE CARD IN HAND
     card = curr -> value;
     firstCard = curr -> next;
     delete curr;
@@ -148,19 +155,19 @@ int Hand::deleteFirstCard(){
   return card;
 }
 
-int Hand::handPlay(){
+int Hand::handPlay(){//GET TYPE OF PLAY 
   Card* curr = firstCard;
 
   if(totalCards == 2){
     int card1 = (firstCard -> value)%13;
     int card2 = (firstCard -> next -> value)%13;
 
-    if(card1 == card2){
+    if(card1 == card2){//IF PAIR
       return 2;
     }
-    else if(card1 == 0 || card2 == 0)
+    else if(card1 == 0 || card2 == 0)//IF ACE
       return 1;
-    else{
+    else{//IF REGULAR HAND
       return 0;
     }
   }

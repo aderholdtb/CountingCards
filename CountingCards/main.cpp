@@ -1,7 +1,6 @@
 #include<iostream>
 #include<vector>
 #include<fstream>
-#include<ctime>
 #include"cards.h"
 #include"player.h"
 #include"dealer.h"
@@ -11,33 +10,28 @@ void exportWinningHands(vector<int> winHands);
 void exportCount(vector<int> count);
 void exportAvgWin(vector<double> avgWin);
 
-int main(){
-  srand(time(NULL));
+int main(int argc, char* argv[]){
+  if(argc < 3){
+    cout<<"Command line should have 1:Players, 2:Decks, 3:Number of hands"<<endl;
+    exit(1);
+  }
 
-  Dealer d(4);
-  vector<double> avgWin;
-  vector<int> winHands;
-  vector<int> count;
+  srand(time(NULL));//RANDOM NUMBER GENERATOR
+
+  Dealer d(atoi(argv[1]), atoi(argv[2]));
+  int hands = atoi(argv[3]);
   
-  for(int i = 0; i < 1000; i++){
+  for(int i = 0; i < hands; i++){//FOR AMOUNT OF DEALS
     d.DealCards();
     d.nextPlayer();
-
-    winHands.push_back(d.winningHands);
-    count.push_back(d.count);
-    avgWin.push_back(d.avgWinnings);
   }
-  
-  exportWinningHands(winHands);
-  exportCount(count);
-  exportAvgWin(avgWin);
     
-    d.displayAllHands();  
+  d.displayAllHands();  //DISPLAY FINAL HANDS
 
   return 0;
 }
 
-void exportWinningHands(vector<int> winHands){
+void exportWinningHands(vector<int> winHands){//EXPORT WINNINGS TO TEXT FILE
   ofstream outFile;
   outFile.open("winHands.txt");
 
@@ -47,7 +41,8 @@ void exportWinningHands(vector<int> winHands){
 
   outFile.close();
 }
-void exportCount(vector<int> count){
+
+void exportCount(vector<int> count){//EXPORT COUNT TO TEXT FILE
   ofstream outFile;
   outFile.open("count.txt");
 
@@ -57,7 +52,8 @@ void exportCount(vector<int> count){
 
   outFile.close();
 }
-void exportAvgWin(vector<double> avgWin){
+
+void exportAvgWin(vector<double> avgWin){//EXPORT AVERAGE WINNINGS TO TEXT FILE
   ofstream outFile;
   outFile.open("avgWin.txt");
 
