@@ -3,29 +3,48 @@
 #include"dealer.h"
 using namespace std;
 
+<<<<<<< HEAD
 Dealer::Dealer(int players, int decks) : Player(), Deck(){//CONSTRUCTOR
   ifstream inFile;
   string tempString = "";
 
   numOfDecks = decks;
+=======
+Dealer::Dealer(int players) : Player(), Deck(){
+  ifstream inFile;//NEED TO GRAB THE BLACKJACK PLAY CARD
+  string tempString ="";
+>>>>>>> origin/master
 
   inFile.open("PairsAces.txt");//GRAB THE CARD VALUES FOR PAIRS AND ACES
 
+<<<<<<< HEAD
   while(inFile>>tempString){
     aceDubs.push_back(tempString);//CREATE VECTOR FOR THEM
+=======
+  while(inFile>>tempString){//ADD ACE PLAY TO A VECTOR FOR EASY ACCESS
+    aceDubs.push_back(tempString);
+>>>>>>> origin/master
   }
 
   inFile.close();
 
   inFile.open("plays.txt");//GRAB REGULAR PLAYS FROM CARD
 
+<<<<<<< HEAD
   while(inFile>>tempString){//CREATE VECTOR FOR THEM
+=======
+  while(inFile>>tempString){//ADD REGULAR HAND PLAYS TO A VECTOR (EX: NO PAIRS OR ACE IN HAND)
+>>>>>>> origin/master
     reg.push_back(tempString);
   }
 
   inFile.close();
 
+<<<<<<< HEAD
   for(int i = 0; i < players + 1; i++){//CREATE NEW PLAYERS
+=======
+  for(int i = 0; i < players + 1; i++){//ADD PLAYERS TO TABLE
+>>>>>>> origin/master
     p[i].playerNumber = i + 1;
   }
 
@@ -37,6 +56,7 @@ Dealer::Dealer(int players, int decks) : Player(), Deck(){//CONSTRUCTOR
 Dealer::~Dealer(){
 }
 
+<<<<<<< HEAD
 void Dealer::DealCards(){//DEALS OUT NEW CARDS
   for(int players = 0; players < totalPlayers; players++){//DELETES ALL PREVIOUS CARDS
     for(int j = 0; j < p[players].handCount; j++){//FOR EACH HAND
@@ -46,6 +66,19 @@ void Dealer::DealCards(){//DEALS OUT NEW CARDS
   }
   
   if(cardsLeft() < totalPlayers * 8){//SHUFFLE IF BELOW A CERTAIN CARD COUNT
+=======
+void Dealer::DealCards(){//DEAL THE CARDS FOR THIS HAND
+  int regularBet = 5;
+
+  for(int players = 0; players < totalPlayers; players++){
+    for(int j = 0; j < p[players].handCount; j++){
+      p[players].hands[j].deleteCards();
+	}
+    p[players].handCount = 1;
+  }
+
+  if(cardsLeft() < totalPlayers * 6){//CHECK FOR NEED TO SHUFFLE DECK
+>>>>>>> origin/master
     shuffle();
 
     for(int i = 0; i < counters; i++){//RESET ALL COUNTERS FOR NEW SHUFFLE
@@ -54,6 +87,7 @@ void Dealer::DealCards(){//DEALS OUT NEW CARDS
   }
   
   int card = 0;
+<<<<<<< HEAD
   
   for(int i = 0; i < totalPlayers; i++){//DEAL OUT CARDS
     card = RemoveTop();
@@ -66,6 +100,9 @@ void Dealer::DealCards(){//DEALS OUT NEW CARDS
   }
   
   for(int i = 0; i < totalPlayers; i++){//TAKE SECOND CARD
+=======
+  for(int i = 0; i < totalPlayers; i++){//ADD TWO CARDS TO EVERY HAND
+>>>>>>> origin/master
     card = RemoveTop();
     p[i].hands[0].takeCard(card);
   }
@@ -123,16 +160,27 @@ void Dealer::keepPlaying(int player, int hand, int dealerCard, int play){//KEEP 
   }
 }
 
+<<<<<<< HEAD
 void Dealer::nextPlayer(){//NEXT PLAYERS TURN
   int dealerCard = p[0].hands[0].getCardValue(p[0].hands[0].firstCard -> value);//DEALERS FACE UP CARD
+=======
+void Dealer::nextPlayer(){//SIMULATE A HAND OF BLACKJACK
+  int dealerCard = p[0].hands[0].getCardValue(p[0].hands[0].firstCard -> value);//GET DEALERS FACE UP CARD
+>>>>>>> origin/master
   int play = -1;
 
+<<<<<<< HEAD
   if(p[0].hands[0].handTotal() == 21){//IF DEALER HAS 21
     distributeWinnings(true);
+=======
+  if(p[0].hands[0].handTotal() == 21){//CHECK FOR IMMEDIATE 21
+    distributeWinnings(true);//IF BLACKJACK DEALER
+>>>>>>> origin/master
     getNewCount();
     return;
   }
 
+<<<<<<< HEAD
   for(int i = 1; i < totalPlayers; i++){//FOR NUMBER OF PLAYERS
     for(int j = 0; j < p[i].handCount; j++){//FOR HAND COUNT
 
@@ -143,10 +191,65 @@ void Dealer::nextPlayer(){//NEXT PLAYERS TURN
         continue;
 
       play = getPlay(i, j, dealerCard);//GET PLAY
+=======
+  for(int i = 1; i < totalPlayers; i++){//RUN THROUGH EVERY PLAYERS HAND
+    for(int j = 0; j < p[i].handCount; j++){//AMOUNT OF HANDS THAT PLAYER HAS (ONLY WHEN SPLITTING)
+      if(p[i].hands[j].handTotal() > 20)
+	continue;
+
+      if(p[i].hands[j].totalCards == 1)//IF ONLY ONE CARD IN HAND
+	p[i].hands[j].takeCard(RemoveTop());
+
+	play = p[i].hands[j].handPlay();//GET PLAY TYPE (EX: HIT, STAND, ETC.)
+
+	if(play == -1){//IF HIT
+	  p[i].hands[j].takeCard(RemoveTop());
+	}
+	else if(play == 0){//GET PLAY FOR REGUALR HAND (NO PAIR OR ACES)
+	  play = regular(p[i].hands[j].handTotal(), dealerCard);
+       	}
+	else if(play == 2){//IF ACES IN HAND
+	  play = aceDoublesHand(false, p[i].hands[j].getCardValue(p[i].hands[j].firstCard -> next -> value), dealerCard);
+	}
+	else if(play == 1){//IF PAIR
+	  if(p[i].hands[j].getCardValue(p[i].hands[j].firstCard -> value) == 11){
+	    play = aceDoublesHand(true, p[i].hands[j].getCardValue(p[i].hands[j].firstCard -> next -> value), dealerCard);
+	  }
+	  else{
+	    play = aceDoublesHand(true, p[i].hands[j].getCardValue(p[i].hands[j].firstCard -> value), dealerCard);
+	  }
+	}
+
+	  keepPlaying = p[i].playType(play, j, takeCard);//IF NEED TO KEEP HITTING
+
+	if(takeCard){//TAKE A CARD
+	  p[i].hands[j].takeCard(RemoveTop());
+	  takeCard = false;
+	}
+	
+	if(play == 3)//IF SPLIT
+	  continue;
+
+	if(p[i].hands[j].handTotal() < 4)//IF HAND COUNT IS LESS THAN 4
+	  p[i].hands[j].takeCard(RemoveTop());
+
+	while(keepPlaying){//KEEP HITTING
+          if(p[i].hands[j].handTotal() > 20)
+            break;
+
+	  if(regular(p[i].hands[j].handTotal(), dealerCard) == 1){
+	    p[i].hands[j].takeCard(RemoveTop());
+	  }
+	  else{
+	    break;
+	  }
+	}
+>>>>>>> origin/master
 
       keepPlaying(i, j, dealerCard, play);//KEEP HITTING
     }
   }
+<<<<<<< HEAD
   
   while(p[0].hands[0].handTotal() < 17){//DEALERS TURN WHILE < 17
     p[0].hands[0].takeCard(RemoveTop());
@@ -167,6 +270,28 @@ int Dealer::aceDoublesHand(bool ace, int card2, int dealerCard){//IF ACE OR DOUB
     else{//IF DOUBLES
         tempString = aceDubs[(card2 - 2)*10 + dealerCard - 2];
 	return play(tempString);//RETURN THE PLAY TYPE
+=======
+
+  while(p[0].hands[0].handTotal() < 17){//FINISH DEALERS HAND
+    p[0].hands[0].takeCard(RemoveTop());
+  }
+
+  distributeWinnings(false);//DEALER DOES NOT HAVE BLACKJACK
+  getNewCount();
+}
+
+int Dealer::aceDoublesHand(bool ace, int card2, int dealerCard){//IF ACE OR PAIR IN HAND
+  string tempString = "";
+
+  for(int i = 0; i < aceDubs.size(); i++){
+    if(!ace){
+        tempString = aceDubs[(80 + (card2 - 2)*10) + dealerCard - 2];//CHECK RULE ON CARD FOR ACE
+	return play(tempString);//RETURN PLAY TYPE
+      }
+    else{//CHECK PAIR
+        tempString = aceDubs[(card2 - 2)*10 + dealerCard - 2];//CHECK RULE ON CARD FOR PAIR
+	return play(tempString);//RETURN PLAY TYPE
+>>>>>>> origin/master
       }
   }
 
@@ -260,6 +385,7 @@ void Dealer::wongHalves(int card){
 }
 
 int Dealer::play(string p){
+<<<<<<< HEAD
   if(p == "H")//IF HIT
     return 1;
   else if(p == "S")//IF STAND
@@ -278,6 +404,26 @@ int Dealer::regular(int handTotal, int dealerCard){//CHECK REGULAR HAND PLAY
   for(int i = 0; i < reg.size(); i++){
     tempString = reg[(20 - handTotal)*10 + dealerCard - 2];
     return play(tempString);//RETURN PLAY
+=======
+  if(p == "H")//HIT
+    return 1;
+  else if(p == "S")//STAND
+    return 0;
+  else if(p == "SP")//SPLIT
+    return 3;
+  else if(p == "Ds")//DOUBLE DOWN - STAND
+    return 5;
+  else//DOUBLE DOWN - HIT
+    return 4;
+}
+
+int Dealer::regular(int handTotal, int dealerCard){//CHECK RULE FOR REGULAR HAND
+  string tempString = "";
+  
+  for(int i = 0; i < reg.size(); i++){
+    tempString = reg[(20 - handTotal)*10 + dealerCard - 2];//GET RULE ON CARD
+    return play(tempString);//GET PLAY TYPE
+>>>>>>> origin/master
   }
 }
  
@@ -314,7 +460,11 @@ void Dealer::displayAllHands(){//DISPLAY ALL HANDS WITH WINNINGS AND COUNT
   cout<<"================================================"<<endl;
 }
 
+<<<<<<< HEAD
 void Dealer::getNewCount(){//GET NEW COUNT
+=======
+void Dealer::getNewCount(){//GET NEW COUNT FOR COUNTING CARDS
+>>>>>>> origin/master
   Card *curr = NULL;
   int value = 0;
 
@@ -336,6 +486,7 @@ void Dealer::getNewCount(){//GET NEW COUNT
   }
 }
 
+<<<<<<< HEAD
 
 void Dealer::payOut(int player, int hand, bool win, bool BJ){//PAY THE PLAYERS
   double BJPayout = 1.5;
@@ -356,11 +507,19 @@ void Dealer::payOut(int player, int hand, bool win, bool BJ){//PAY THE PLAYERS
 void Dealer::distributeWinnings(bool BJ){//CHECK HANDS FOR PAYOUT
   int dealerHand = p[0].hands[0].handTotal();
   int pHandTotal = 0;  
+=======
+void Dealer::distributeWinnings(bool BJ){//UPDATE WINNINGS
+  int dealerHand = p[0].hands[0].handTotal();
+  int pHandTotal = 0;  
+  float BJPayout = 3/2;//TABLE PAYS 3 TO 2 ON BLACKJACK
+  avgWinnings = 0;
+>>>>>>> origin/master
 
-  for(int i = 0; i < totalPlayers; i++){
+  for(int i = 0; i < totalPlayers; i++){//CHECK EVERY PLAYERS HAND
     for(int j = 0; j < p[i].handCount; j++){
       pHandTotal = p[i].hands[j].handTotal();
 
+<<<<<<< HEAD
       if(BJ && pHandTotal != 21)//IF DEALER BLACKJACK
 	payOut(i, j, false, false);
       else if(pHandTotal == 21 && p[i].hands[j].totalCards == 2){//IF PLAYER BLACKJACK
@@ -379,6 +538,36 @@ void Dealer::distributeWinnings(bool BJ){//CHECK HANDS FOR PAYOUT
       }
       else if(pHandTotal > 21)//IF PLAYER BUST
 	payOut(i, j, false, false);
+=======
+      if(BJ && pHandTotal != 21)//IF DEALER HAS BLACKJACK AND PLAYER DOES NOT
+	p[i].chips -= p[i].hands[j].handCost;
+      else if(pHandTotal == 21 && p[i].hands[j].totalCards == 2){//IF PLAYER BLACKJACK
+	winningHands++;
+	p[i].chips += p[i].hands[j].handCost*BJPayout;
+      }
+      else if(pHandTotal <= 21){//IF PLAYER NOT BUST
+	if(dealerHand > 21 && pHandTotal <= 21){//IF DEALER BUST
+	  winningHands++;
+	  p[i].chips += p[i].hands[j].handCost;
+	}
+	else if(dealerHand > pHandTotal){//IF DEALER HAND BEATS PLAYER HAND
+	  p[i].chips -= p[i].hands[j].handCost;
+	}
+	else if(pHandTotal > dealerHand){//IF PLAYER HAND BEATS DEALERS
+	  winningHands++;
+	  p[i].chips += p[i].hands[j].handCost;
+	}
+      }
+      else if(pHandTotal > 21)//IF PLAYER BUST
+	p[i].chips -= p[i].hands[j].handCost;
+
+      p[i].hands[j].handCost = 0;//RESET HAND COST FOR NEW HAND
+>>>>>>> origin/master
     }
   }
+<<<<<<< HEAD
+=======
+
+  avgWinnings /= totalPlayers - 1;//GET AVG WINNINGS 
+>>>>>>> origin/master
 }

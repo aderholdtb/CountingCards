@@ -17,6 +17,7 @@ Hand::~Hand(){
   deleteCards();
 }
 
+<<<<<<< HEAD
 void Hand::doubleDown(){
   for(int i = 0; i < 4; i++){//DOUBLE DOWN FOR EVERY COUNT TYPE
     handCost[i]*=2;
@@ -30,6 +31,13 @@ void Hand::bet(double betAmount, int type){//BET FOR TYPE OF COUNT
 }
 
 void Hand::takeCard(int Cardvalue){//GRAB NEW CARD
+=======
+void Hand::bet(double betAmount){//BET AMOUNT
+  handCost = betAmount;
+}
+
+void Hand::takeCard(int Cardvalue){//ADD CARD TO HAND
+>>>>>>> origin/master
   Card* curr = firstCard, *newCard = NULL;
   newCard = new Card();//CREATE NEW CARD
   newCard -> value = Cardvalue;
@@ -50,7 +58,11 @@ void Hand::takeCard(int Cardvalue){//GRAB NEW CARD
   totalCards++;
 }
 
+<<<<<<< HEAD
 void Hand::deleteCards(){//DELETE CARDS IN HAND
+=======
+void Hand::deleteCards(){//DELETE HAND
+>>>>>>> origin/master
   Card* curr = firstCard;
 
   if(curr == NULL){//IF NO CARDS IN HAND
@@ -75,7 +87,7 @@ int Hand::handTotal(){//GET HAND TOTAL
   while(curr != NULL){//WHILE THERE ARE CARDS LEFT IN HAND
     cardvalue = getCardValue(curr -> value);
 
-    if(cardvalue == 11)
+    if(cardvalue == 11)//UPDATE ACE COUNT
       aceCount++;
 
     count += cardvalue;
@@ -92,7 +104,11 @@ int Hand::handTotal(){//GET HAND TOTAL
   return count;
 }
 
+<<<<<<< HEAD
 int Hand::getCardValue(int card){//GET CARD VALUE
+=======
+int Hand::getCardValue(int card){//RETURN CARD VALUE 1-11
+>>>>>>> origin/master
   card %= 13;
 
   if(card == 11 || card == 12 || card == 10)
@@ -103,7 +119,11 @@ int Hand::getCardValue(int card){//GET CARD VALUE
   return card + 1;
 }
 
+<<<<<<< HEAD
 void Hand::displayCards(int hand){//DISPLAY ALL CARDS
+=======
+void Hand::displayCards(int hand){//DISPLAY CARDS, SUIT AND CARD
+>>>>>>> origin/master
   Card* curr = firstCard;
   int cardValue = 0;
 
@@ -165,7 +185,11 @@ int Hand::handPlay(){//GET TYPE OF PLAY
     if(card1 == card2){//IF PAIR
       return 2;
     }
+<<<<<<< HEAD
     else if(card1 == 0 || card2 == 0)//IF ACE
+=======
+    else if(card1 == 0 || card2 == 0)//IF ACE IN HAND
+>>>>>>> origin/master
       return 1;
     else{//IF REGULAR HAND
       return 0;

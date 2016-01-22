@@ -6,9 +6,9 @@
 #include"dealer.h"
 using namespace std;
 
-void exportWinningHands(vector<int> winHands);
-void exportCount(vector<int> count);
-void exportAvgWin(vector<double> avgWin);
+void exportWinningHands(vector<int> winHands);//UPDATE AMOUNT OF WINNING HANDS FOR THIS ROUND
+void exportCount(vector<int> count);//UPDATE COUNT FOR EACH ROUND OF CARDS
+void exportAvgWin(vector<double> avgWin);//AVERAGE WINNINGS FOR HAND
 
 int main(int argc, char* argv[]){
   if(argc < 3){
@@ -18,8 +18,15 @@ int main(int argc, char* argv[]){
 
   srand(time(NULL));//RANDOM NUMBER GENERATOR
 
+<<<<<<< HEAD
   Dealer d(atoi(argv[1]), atoi(argv[2]));
   int hands = atoi(argv[3]);
+=======
+  Dealer d(4);//AMOUNT OF PLAYERS AT TABLE
+  vector<double> avgWin;
+  vector<int> winHands;
+  vector<int> count;
+>>>>>>> origin/master
   
   for(int i = 0; i < hands; i++){//FOR AMOUNT OF DEALS
     d.DealCards();
@@ -31,7 +38,11 @@ int main(int argc, char* argv[]){
   return 0;
 }
 
+<<<<<<< HEAD
 void exportWinningHands(vector<int> winHands){//EXPORT WINNINGS TO TEXT FILE
+=======
+void exportWinningHands(vector<int> winHands){//AMOUNT OF WINNING HANDS FOR ROUND
+>>>>>>> origin/master
   ofstream outFile;
   outFile.open("winHands.txt");
 
@@ -42,7 +53,11 @@ void exportWinningHands(vector<int> winHands){//EXPORT WINNINGS TO TEXT FILE
   outFile.close();
 }
 
+<<<<<<< HEAD
 void exportCount(vector<int> count){//EXPORT COUNT TO TEXT FILE
+=======
+void exportCount(vector<int> count){//COUNT AFTER EACH ROUND
+>>>>>>> origin/master
   ofstream outFile;
   outFile.open("count.txt");
 
@@ -53,7 +68,11 @@ void exportCount(vector<int> count){//EXPORT COUNT TO TEXT FILE
   outFile.close();
 }
 
+<<<<<<< HEAD
 void exportAvgWin(vector<double> avgWin){//EXPORT AVERAGE WINNINGS TO TEXT FILE
+=======
+void exportAvgWin(vector<double> avgWin){//AVERAGE WINNINGS FOR ROUND
+>>>>>>> origin/master
   ofstream outFile;
   outFile.open("avgWin.txt");
 

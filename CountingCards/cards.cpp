@@ -5,14 +5,23 @@ using namespace std;
 
 Deck::Deck(){
   Top = NULL;
+<<<<<<< HEAD
   numOfDecks = 2;
 }
 
 Deck::~Deck(){
   while(!isEmpty())//DESTRUCTOR REMOVE UNTIL EMPTY
+=======
+  numOfDecks = 8;//INITIATE NUMBER OF DECKS
+}
+
+Deck::~Deck(){
+  while(!isEmpty())//DELETE ALL CARDS
+>>>>>>> origin/master
     RemoveTop();
 }
 
+//DISPLAY ALL CARDS
 void Deck::displayAll(){
   Card* curr = Top;
 
@@ -25,12 +34,21 @@ void Deck::displayAll(){
 
   cout<<"]"<<endl;
 }
+<<<<<<< HEAD
 
 int Deck::RemoveTop(){//REMOVE TOP CARD OF DECK
   Card* curr = Top;
   int card = 0;
 
   if(isEmpty()){//IF EMPTY
+=======
+//POP THE TOP OF THE DECK
+int Deck::RemoveTop(){
+  Card* curr = Top;
+  int card = 0;
+
+  if(isEmpty()){//IF DECK IS EMPTY
+>>>>>>> origin/master
     cout<<"Deck is Empty"<<endl;
     return -1;
   }
@@ -39,7 +57,11 @@ int Deck::RemoveTop(){//REMOVE TOP CARD OF DECK
     Top = NULL;
     delete curr;
   }
+<<<<<<< HEAD
   else{//IF MORE THAN ONE CARD IN DECK
+=======
+  else{//MORE THAN ONE CARD IN DECK
+>>>>>>> origin/master
     card = curr -> value;
     Top = curr -> next;
     delete curr;
@@ -48,7 +70,11 @@ int Deck::RemoveTop(){//REMOVE TOP CARD OF DECK
   return card;
 }
 
+<<<<<<< HEAD
 void Deck::push(int Cardvalue){//ADD CARD TO THE TOP OF THE DECK
+=======
+void Deck::push(int Cardvalue){//ADD CARD TO THE DECK
+>>>>>>> origin/master
   Card* curr = Top, *newCard = NULL;
   newCard = new Card();//CREATE NEW CARD
   newCard -> value = Cardvalue;
@@ -66,15 +92,25 @@ void Deck::push(int Cardvalue){//ADD CARD TO THE TOP OF THE DECK
 
 }
 
+<<<<<<< HEAD
 bool Deck::isEmpty(){//CHECK IF EMPTY
   if(Top == NULL)//TRUE IF EMPTY
+=======
+bool Deck::isEmpty(){//IS DECK IS EMPTY
+  if(Top == NULL)
+>>>>>>> origin/master
     return true;
   else
     return false;
 }
 
+<<<<<<< HEAD
 bool Deck::isFull(){//CHECK IF FULL
   if(cardsLeft() == 52*numOfDecks)//TRUE IF FULL
+=======
+bool Deck::isFull(){//IF DECK IS FULL
+  if(cardsLeft() == 52*numOfDecks)
+>>>>>>> origin/master
     return true;
   else
     return false;
@@ -92,7 +128,11 @@ int Deck::cardsLeft(){//COUNTS THE CARDS IN THE DECK
   return count;
 }
 
+<<<<<<< HEAD
 int Deck::getCard(int position){//GRAB CARD OUT OF DECK
+=======
+int Deck::getCard(int position){//POP CARD
+>>>>>>> origin/master
   Card* curr = Top;
   int Cardvalue = 0;
 
@@ -114,7 +154,11 @@ int Deck::getCard(int position){//GRAB CARD OUT OF DECK
   return Cardvalue;
 }
 
+<<<<<<< HEAD
 void Deck::shuffle(){//SHUFFLE THE DECK AGAIN, NEED AMOUNT OF DECKS
+=======
+void Deck::shuffle(){//SHUFFLE THE DECK 
+>>>>>>> origin/master
   int card = 0;
   int unusedCards = 52*numOfDecks;
   vector<int> d;
